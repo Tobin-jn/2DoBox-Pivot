@@ -3,6 +3,8 @@
 // var numCards = 0;
 // var qualityVariable = "swill";
 
+
+
 //Event Listener
 $('.save-btn').on('click', submitIdea);
 
@@ -38,8 +40,9 @@ function newIdeaCard(title, body, id, quality) {
               <hr>
             </div>`;
   console.log(newCard);
+  var cardContainer = $('.bottom-box');
+  cardContainer.prepend(newCard);
 };
-
 
 
 
