@@ -1,10 +1,4 @@
 
-
-// var numCards = 0;
-// var qualityVariable = "swill";
-
-
-
 //Event Listener
 $('.save-btn').on('click', submitIdea);
 
@@ -45,6 +39,36 @@ function newIdeaCard(title, body, id, quality) {
 };
 
 
+// create an array that all data will be saved in
+function initialArray() {
+  var newArray = [];
+  return newArray
+}
+
+//push newIdea object into array
+function updateArray() {
+  var savedIdea = newIdea()
+  var ideaArray = initialArray()
+  ideaArray.push(savedIdea)
+  storeIdeas();
+  return
+}
+
+//push array into Local Storage
+function storeIdeas() {
+  var storedIdeas = JSON.stringify(updateArray);
+  localStorage.setItem('ideas', storedIdeas);
+}
+
+
+
+
+
+
+var localStoreCard = function() {
+    var cardString = JSON.stringify(cardObject());
+    localStorage.setItem('card' + numCards  , cardString);
+}
 
 $.each(localStorage, function(key) {
     var cardData = JSON.parse(this);
@@ -52,10 +76,7 @@ $.each(localStorage, function(key) {
     $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
 });
 
-var localStoreCard = function() {
-    var cardString = JSON.stringify(cardObject());
-    localStorage.setItem('card' + numCards  , cardString);
-}
+
 
 $('.save-btn').on('click', function(event) {
     event.preventDefault();
