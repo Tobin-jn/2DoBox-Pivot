@@ -1,29 +1,47 @@
-var title = $('#title-input').val();
-var body = $('#body-input').val();
-var numCards = 0;
-var qualityVariable = "swill";
 
 
-var newCard = function(id , title , body , quality) {
-    return '<div id="' + id + '"class="card-container"><h2 class="title-of-card">'  
-            + title +  '</h2>'
-            + '<button class="delete-button"></button>'
-            +'<p class="body-of-card">'
-            + body + '</p>'
-            + '<button class="upvote"></button>' 
-            + '<button class="downvote"></button>' 
-            + '<p class="quality">' + 'quality:' + '<span class="qualityVariable">' + quality + '</span>' + '</p>'
-            + '<hr>' 
-            + '</div>';
-};
+// var numCards = 0;
+// var qualityVariable = "swill";
 
-function cardObject() {
+//Event Listener
+$('.save-btn').on('click', submitIdea);
+
+//Submit an idea
+function submitIdea(event) {
+  event.preventDefault();
+  console.log('Test click');
+  var idea = newIdea();
+  console.log(idea);
+  newIdeaCard(idea.title, idea.body, idea.id, idea.currentQuality);
+}
+
+//Make an object
+function newIdea() {
     return {
         title: $('#title-input').val(),
         body: $('#body-input').val(),
-        quality: qualityVariable
+        id: Date.now(),
+        currentQuality: "swill"
     };
 }
+
+//Make new card
+function newIdeaCard(title, body, id, quality) {
+ 
+  var newCard = `<div id="${id}" class="card-container">
+              <h2 class="title-of-card">${title}</h2>
+              <button class="delete-button"></button>
+              <p class="body-of-card">${body}</p>
+              <button class="upvote"></button>
+              <button class="downvote"></button>
+              <p class="quality"> quality: <span class="qualityVariable">${quality}</span></p>
+              <hr>
+            </div>`;
+  console.log(newCard);
+};
+
+
+
 
 $.each(localStorage, function(key) {
     var cardData = JSON.parse(this);
