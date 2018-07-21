@@ -3,6 +3,7 @@ var body = $('#body-input').val();
 var numCards = 0;
 var qualityVariable = "swill";
 
+
 var newCard = function(id , title , body , quality) {
     return '<div id="' + id + '"class="card-container"><h2 class="title-of-card">'  
             + title +  '</h2>'

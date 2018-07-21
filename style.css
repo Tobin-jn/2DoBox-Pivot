@@ -1,180 +1,185 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    font-family: 'Roboto Slab', serif;
-}
-
-.container-box {
-    margin: 0;
-}
+/*============Base===========*/
 
 body {
-    box-sizing: border-box;
-    margin: 0;
-}
-
-.top-box {
-    background-color: #e5f3f2;
-    box-sizing: border-box;
-    height: 300px;
-    margin: 0;
-    text-align: center;
-}
-
-h1{
-    color: #6d6e71;
-    display: inline-block;
-    font-size: 275%;
-    margin-bottom:  30px;
-}
-
-.idea {
-    color: #00a79d;
-}
-
-#title-input {
-    align-items: center;
-    display: flex;
-    height: 30px;
-    justify-content: space-between;
-    width: 45%;
-}
-
-#body-input {
-    align-items: center;
-    display: flex;
-    height: 30px;
-    justify-content: space-between;
-    width: 45%;
-}
-
-#search-input {
-    height: 30px;
-    margin-top: 50px;
-    width: 45%;
-}
-
-.save-btn {
-    background-color: #00a79d;
-    border: none;
-    color: #fff;
-    font-size: 120%;
-    height: 30px;
-    width: 45.5%;
-}
-
-.save-btn:hover {
-    background-color: #045e55;
-}
-
-input {
-    align-items: center;
-    display: flex;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 100%;
-    justify-content: space-between;
-    margin: auto;
-}
-
-.card-container {
-    margin: auto;
-    position: relative;
-    width: 45%;
-}
-
-.card {
-    background-color: #ffffff;
-    height: auto;
-    margin: auto;
-    width: 45%;
-}
-
-.title-of-card{
-    color: #6D6E71;
-    display: inline-block;
-    font-family: 'Roboto Slab', serif;
-    font-size: 140%;
-}
-
-h2 {
-   color: #6d6e71; 
-   display: inline-block;
-   font-family: 'Roboto Slab', serif;
-   font-size: 150%;
-}
-
-p {
-    color: #939598;
-    font-family: 'Open Sans', sans-serif;
-}
-
-.body-of-card{
-    color: #939598;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  font-family: 'Roboto Slab', serif;
+  color: #6d6e71; 
 }
 
 button {
-    background-color: transparent;
-    border: none;
+  border: none;
 }
 
-.upvote {
-    background-image: url(./images/upvote.svg);
-    background-size: cover;
-    height: 20px;
-    margin-right: 5px; 
-    width: 20px;
+hr {
+  display: block;
+  margin-top: 20px;
 }
 
-.upvote:hover {
-    background-color: transparent;
-    background-image: url(./images/upvote-hover.svg);
-    background-size: cover;
-    height: 20px;
-    width: 20px;
+h1{
+  display: inline-block;
+  font-size: 275%;
+  margin-top: 30px;
+  margin-bottom:  20px;
 }
 
-.downvote {
-    background-image: url(./images/downvote.svg);
-    background-size: cover;
-    height: 20px;
-    margin-right: 5px; 
-    width: 20px;
+h2 {
+  display: inline-block;
+  font-size: 150%;
+  margin: 10px 0px;
 }
 
-.downvote:hover {
-    background-image: url(./images/downvote-hover.svg);
-    background-size: cover;
-    height: 20px;
-    width: 20px;
+input {
+  display: flex;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 100%;
+  height: 30px;
+  margin: auto;
+  width: 60%;
+}
+
+p {
+  color: #939598;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/*============Layout===========*/
+
+.card-container {
+  margin: auto;
+  position: relative;
+  width: 60%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.search {
+  height: 70px;
+}
+
+.top-box {
+  background-color: #e5f3f2;
+  height: 275px;
+  text-align: center;
+}
+
+/*============Module===========*/
+
+.body-of-card {
+  margin: 6px 0px 20px;
+}
+
+.card {
+  background-color: #ffffff;
+  height: auto;
+  margin: auto;
+  width: 45%;
 }
 
 .delete-button {
-    background-image: url(./images/delete.svg);
-    background-size: cover;
-    height: 20px;
-    position: absolute;
-    right: 10px;
-    top: 15px;
-    width: 20px;
+  background-image: url(./images/delete.svg);
+  height: 20px;
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  width: 20px;
 }
 
-.delete-button:hover {
-    background-image: url(./images/delete-hover.svg);
-    background-size: cover;
-    height: 20px;
-    width: 20px;
+.downvote {
+  background-image: url(./images/downvote.svg);
 }
+
+.downvote,
+.upvote {
+  height: 20px; 
+  width: 20px;
+}
+
+.idea {
+  color: #00a79d;
+}
+
+.quality {
+  color: #6D6E71;
+  display: inline;
+  padding: 20px;
+}
+
+.qualityVariable {
+  padding: 10px;
+}
+
+.save-btn {
+  background-color: #00a79d;
+  color: #fff;
+  font-size: 120%;
+  height: 30px;
+  width: 60%;
+}
+
+#search-input {
+  margin-top: 18px;
+}
+
+.upvote {
+  background-image: url(./images/upvote.svg);
+  margin-right: 12px;
+}
+
+/*============States===========*/
+
+.delete-button:hover {
+  background-image: url(./images/delete-hover.svg);
+  background-size: cover;
+  height: 20px;
+  width: 20px;
+}
+
+.downvote:hover {
+  background-image: url(./images/downvote-hover.svg);
+  background-size: cover;
+  height: 20px;
+  width: 20px;
+}
+
+input::placeholder {
+  color: #939598;
+}
+
+.save-btn:hover {
+  background-color: #045e55;
+}
+
+.upvote:hover {
+  background-color: transparent;
+  background-image: url(./images/upvote-hover.svg);
+  background-size: cover;
+  height: 20px;
+  width: 20px;
+}
+
+/*============Theme===========*/
 
 @media(max-width: 640px){
 
-    .card-container {
-        width: 85%;
-    }
+  input {
+    width: 85%;
+    height: 35px;
+  }
 
-    #search-input {
-        border: solid #999 1px;
-    }
+  .card-container {
+    width: 85%;
+  }
+
+  .save-btn {
+    width: 85%;
+    height: 35px;
+  }
+
+  .top-box {
+    height: 290px;
+  }
 }
-
