@@ -18,12 +18,17 @@ button {
   border: none;
 }
 
+header {
+  text-align: center;
+}
+
 hr {
   display: block;
   margin-top: 20px;
 }
 
 h1{
+  color: #6D6E71;
   display: inline-block;
   font-size: 275%;
   margin-top: 30px;
@@ -41,8 +46,12 @@ input {
   font-family: 'Open Sans', sans-serif;
   font-size: 100%;
   height: 30px;
-  margin: auto;
+  margin: 15px auto;
   width: 60%;
+}
+
+input::placeholder {
+  padding: 5px;
 }
 
 p {
@@ -69,7 +78,6 @@ p {
 
 .top-box {
   background-color: #e5f3f2;
-  height: 275px;
   text-align: center;
 }
 
@@ -124,6 +132,7 @@ p {
   color: #fff;
   font-size: 120%;
   height: 30px;
+  margin-bottom: 25px;
   width: 60%;
 }
 
