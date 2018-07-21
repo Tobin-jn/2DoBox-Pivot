@@ -1,31 +1,33 @@
 <!doctype html>
 <html>
-<head>
+  <head>
     <title>ideaBox</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-</head>
-
-<body>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:400,700" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <h1 class="idea"><span>idea</span>Box</h1>
+    </header>
     <section class="container box">
-        <article class="top-box">
-            <form>
-                <h1 class="idea">idea</h1>
-                <h1 class="box">Box</h1>
-                <input id="title-input" type="text" placeholder="Title"><br />
-                <input id="body-input" type="text" placeholder="Body"><br />  
-                <button class="save-btn">save</button><br />
-            </form>
-        </article>
-        
-        <input id="search-input" type="text" placeholder="Search">
-
-        <article class="bottom-box"> </article>
-
+      <article class="top-box">
+        <form>
+          <label for="title-input">
+            <input id="title-input" edit type="text" placeholder="Title">
+          </label>
+          <label for="body-input">
+            <input id="body-input" type="text" placeholder="Body">
+          </label>
+          <button class="save-btn">save</button>
+        </form>
+      </article>
+      <form class ="search">
+        <input id="search-input" type="search" placeholder="Search">
+      </form>
+      <article class="bottom-box" role="feed"></article>
     </section>
-
     <script src="./jquery/jquery-3.2.1.js"></script>
     <script src="./index.js"></script>
-</body>
+  </body>
+</html>
