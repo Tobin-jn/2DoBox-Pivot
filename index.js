@@ -1,29 +1,45 @@
-var title = $('#title-input').val();
-var body = $('#body-input').val();
-var numCards = 0;
-var qualityVariable = "swill";
+//Event Listener
+$('.save-btn').on('click', submitIdea);
 
+//Submit an idea
+function submitIdea(event) {
+  event.preventDefault();
+  var title = $('#title-input').val();
+  var body = $('#body-input').val();
 
-var newCard = function(id , title , body , quality) {
-    return '<div id="' + id + '"class="card-container"><h2 class="title-of-card">'  
-            + title +  '</h2>'
-            + '<button class="delete-button"></button>'
-            +'<p class="body-of-card">'
-            + body + '</p>'
-            + '<button class="upvote"></button>' 
-            + '<button class="downvote"></button>' 
-            + '<p class="quality">' + 'quality:' + '<span class="qualityVariable">' + quality + '</span>' + '</p>'
-            + '<hr>' 
-            + '</div>';
-};
-
-function cardObject() {
-    return {
-        title: $('#title-input').val(),
-        body: $('#body-input').val(),
-        quality: qualityVariable
-    };
+  //this instantiates a new idea from our constructor function
+  // we pass in the title and body 
+  var idea = new Idea(title, body);
+  console.log(idea);
+  // we pass the newly created "idea" object to newIdeaCard function
+  newIdeaCard(idea);
 }
+
+// function constructor -- creates a new object.
+function Idea(title, body, quality) {
+    this.title = title;
+    this.body = body;
+    this.id = Date.now();
+    this.quality = 'swill' || quality;;
+}
+
+//Make new card
+function newIdeaCard(ideaObj) {
+    //since we passed in the idea object we can use the values from it
+    //using dot notation
+  var newCard = `<div id="${ideaObj.id}" class="card-container">
+              <h2 class="title-of-card">${ideaObj.title}</h2>
+              <button class="delete-button"></button>
+              <p class="body-of-card">${ideaObj.body}</p>
+              <button class="upvote"></button>
+              <button class="downvote"></button>
+              <p class="quality"> quality: <span class="qualityVariable">${ideaObj.quality}</span></p>
+              <hr>
+            </div>`;
+  console.log(newCard);
+  var cardContainer = $('.bottom-box');
+  cardContainer.prepend(newCard);
+};
 
 $.each(localStorage, function(key) {
     var cardData = JSON.parse(this);
@@ -41,11 +57,12 @@ $('.save-btn').on('click', function(event) {
     if ($('#title-input').val() === "" || $('#body-input').val() === "") {
        return false;
     };  
-
+    console.log('this func ran');
     numCards++;
-    $( ".bottom-box" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
-    localStoreCard();
-    $('form')[0].reset();
+
+    // $( ".bottom-box" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
+    // localStoreCard();
+    // $('form')[0].reset();
 });
 
 $(".bottom-box").on('click', function(event) {
