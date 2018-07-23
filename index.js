@@ -1,3 +1,5 @@
+var arrIdeas = [];
+var counter = 0;
 //Event Listener
 $('.save-btn').on('click', submitIdea);
 
@@ -10,7 +12,8 @@ function submitIdea(event) {
   //this instantiates a new idea from our constructor function
   // we pass in the title and body 
   var idea = new Idea(title, body);
-  console.log(idea);
+  arrIdeas.push(idea);
+  console.log(arrIdeas);
   // we pass the newly created "idea" object to newIdeaCard function
   newIdeaCard(idea);
 }
@@ -36,16 +39,15 @@ function newIdeaCard(ideaObj) {
               <p class="quality"> quality: <span class="qualityVariable">${ideaObj.quality}</span></p>
               <hr>
             </div>`;
-  console.log(newCard);
   var cardContainer = $('.bottom-box');
   cardContainer.prepend(newCard);
 };
 
-$.each(localStorage, function(key) {
-    var cardData = JSON.parse(this);
-    numCards++;
-    $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
-});
+// $.each(localStorage, function(key) {
+//     var cardData = JSON.parse(this);
+//     numCards++;
+//     $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
+// });
 
 var localStoreCard = function() {
     var cardString = JSON.stringify(cardObject());
@@ -57,20 +59,24 @@ $('.save-btn').on('click', function(event) {
     if ($('#title-input').val() === "" || $('#body-input').val() === "") {
        return false;
     };  
-    console.log('this func ran');
-    numCards++;
-
+    // numCards++;
     // $( ".bottom-box" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
     // localStoreCard();
     // $('form')[0].reset();
 });
 
-$(".bottom-box").on('click', function(event) {
+function qualityCycle(event) {
     var qualityTypes = ['swill', 'plausible', 'genius'];
-    if (event.target.className === 'upvote' || event.target.className === 'downvote') {
-        console.log('clicked');
+    var qualityVar = $(event.target).parent().find('span');
+    if (counter < 2 && $(event.target).hasClass('upvote')) {
+      counter++;
+    } else if (counter > 0 && $(event.target).hasClass('downvote')) {
+      counter --;
     }
-});
+    qualityVar.text(qualityTypes[counter]);
+}
+
+$(".bottom-box").on('click', qualityCycle);
 
 // $(".bottom-box").on('click', function(event){
 //     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
