@@ -43,11 +43,11 @@ var localStoreCard = function() {
   localStorage.setItem('card' + numCards  , cardString);
 }
 
-$.each(localStorage, function(key) {
-  var cardData = JSON.parse(this);
-  numCards++;
-  $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
-});
+// $.each(localStorage, function(key) {
+//   var cardData = JSON.parse(this);
+//   numCards++;
+//   $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
+// });
 
 $('.save-btn').on('click', submitIdea);
 
