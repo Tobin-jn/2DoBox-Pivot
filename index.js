@@ -1,4 +1,3 @@
-var arrIdeas = [];
 var counter = 0;
 var savedIdeas = [];
 
@@ -8,12 +7,12 @@ function submitIdea(event) {
   var body = $('#body-input').val(); 
   var idea = new Idea(title, body);
   savedIdeas.push(idea);
-  storeIdeas()
+  storeIdeas(idea)
   newIdeaCard(idea);
 }
 
-function storeIdeas() {
-  var storedIdeas = JSON.stringify(savedIdeas);
+function storeIdeas(idea) {
+  var storedIdeas = JSON.stringify(idea);
   localStorage.setItem('ideas', storedIdeas);
 }
 
@@ -60,18 +59,34 @@ function qualityCycle(event) {
     counter --;
   }
   qualityVar.text(qualityTypes[counter]);
+  console.log('quality')
+}
+
+function deleteCard(event) {
+  var deleteBtn = $(event.target).parent().find('.delete-button')
+  var cardId = $(event.target).parent().attr('id')
+  if ($(event.target).hasClass('delete-button')) {
+    deleteBtn.parent().remove()
+  }
+  var newArray = savedIdeas.filter(function(idea) {
+    return idea.id != cardId
+  })
+  console.log(newArray)
 }
 
 $(".bottom-box").on('click', qualityCycle);
+$(".bottom-box").on('click', deleteCard);
 
 document.addEventListener("DOMContentLoaded", persistCards);
 
 function persistCards() {
   var storedCards = localStorage.getItem('ideas');
   var parsedCards = JSON.parse(storedCards);
-  parsedCards.forEach(function(idea) {
-    newIdeaCard(idea)
-  })
+  console.log(parsedCards)
+  parsedCards.forEach(function(i) {
+    // savedIdeas.push(i);
+    newIdeaCard(i);
+  });
 }
 
 
