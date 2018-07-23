@@ -1,35 +1,30 @@
 var arrIdeas = [];
 var counter = 0;
-//Event Listener
-$('.save-btn').on('click', submitIdea);
+var savedIdeas = [];
 
-//Submit an idea
 function submitIdea(event) {
   event.preventDefault();
   var title = $('#title-input').val();
-  var body = $('#body-input').val();
-
-  //this instantiates a new idea from our constructor function
-  // we pass in the title and body 
+  var body = $('#body-input').val(); 
   var idea = new Idea(title, body);
-  arrIdeas.push(idea);
-  console.log(arrIdeas);
-  // we pass the newly created "idea" object to newIdeaCard function
+  savedIdeas.push(idea);
+  storeIdeas()
   newIdeaCard(idea);
 }
 
-// function constructor -- creates a new object.
-function Idea(title, body, quality) {
-    this.title = title;
-    this.body = body;
-    this.id = Date.now();
-    this.quality = 'swill' || quality;;
+function storeIdeas() {
+  var storedIdeas = JSON.stringify(savedIdeas);
+  localStorage.setItem('ideas', storedIdeas);
 }
 
-//Make new card
+function Idea(title, body, quality) {
+  this.title = title;
+  this.body = body;
+  this.id = Date.now();
+  this.quality = 'swill' || quality;
+}
+
 function newIdeaCard(ideaObj) {
-    //since we passed in the idea object we can use the values from it
-    //using dot notation
   var newCard = `<div id="${ideaObj.id}" class="card-container">
               <h2 class="title-of-card">${ideaObj.title}</h2>
               <button class="delete-button"></button>
@@ -43,37 +38,28 @@ function newIdeaCard(ideaObj) {
   cardContainer.prepend(newCard);
 };
 
-// $.each(localStorage, function(key) {
-//     var cardData = JSON.parse(this);
-//     numCards++;
-//     $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
-// });
-
 var localStoreCard = function() {
-    var cardString = JSON.stringify(cardObject());
-    localStorage.setItem('card' + numCards  , cardString);
+  var cardString = JSON.stringify(cardObject());
+  localStorage.setItem('card' + numCards  , cardString);
 }
 
-$('.save-btn').on('click', function(event) {
-    event.preventDefault();
-    if ($('#title-input').val() === "" || $('#body-input').val() === "") {
-       return false;
-    };  
-    // numCards++;
-    // $( ".bottom-box" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
-    // localStoreCard();
-    // $('form')[0].reset();
+$.each(localStorage, function(key) {
+  var cardData = JSON.parse(this);
+  numCards++;
+  $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
 });
 
+$('.save-btn').on('click', submitIdea);
+
 function qualityCycle(event) {
-    var qualityTypes = ['swill', 'plausible', 'genius'];
-    var qualityVar = $(event.target).parent().find('span');
-    if (counter < 2 && $(event.target).hasClass('upvote')) {
-      counter++;
-    } else if (counter > 0 && $(event.target).hasClass('downvote')) {
-      counter --;
-    }
-    qualityVar.text(qualityTypes[counter]);
+  var qualityTypes = ['swill', 'plausible', 'genius'];
+  var qualityVar = $(event.target).parent().find('span');
+  if (counter < 2 && $(event.target).hasClass('upvote')) {
+    counter++;
+  } else if (counter > 0 && $(event.target).hasClass('downvote')) {
+    counter --;
+  }
+  qualityVar.text(qualityTypes[counter]);
 }
 
 $(".bottom-box").on('click', qualityCycle);
