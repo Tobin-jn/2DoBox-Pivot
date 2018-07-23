@@ -64,6 +64,17 @@ function qualityCycle(event) {
 
 $(".bottom-box").on('click', qualityCycle);
 
+document.addEventListener("DOMContentLoaded", persistCards);
+
+function persistCards() {
+  var storedCards = localStorage.getItem('ideas');
+  var parsedCards = JSON.parse(storedCards);
+  parsedCards.forEach(function(idea) {
+    newIdeaCard(idea)
+  })
+}
+
+
 // $(".bottom-box").on('click', function(event){
 //     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
 //     var qualityVariable;
