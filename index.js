@@ -124,14 +124,3 @@ $(".bottom-box").on('click', qualityCycle);
 //         localStorage.removeItem(cardHTMLId);
 //     }
 // });
-      
-
-
-
-
-
-
-
-
-
-
