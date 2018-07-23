@@ -1,32 +1,28 @@
-//Event Listener
-$('.save-btn').on('click', submitIdea);
+var savedIdeas = [];
 
-//Submit an idea
 function submitIdea(event) {
   event.preventDefault();
   var title = $('#title-input').val();
-  var body = $('#body-input').val();
-
-  //this instantiates a new idea from our constructor function
-  // we pass in the title and body 
+  var body = $('#body-input').val(); 
   var idea = new Idea(title, body);
-  console.log(idea);
-  // we pass the newly created "idea" object to newIdeaCard function
+  savedIdeas.push(idea);
+  storeIdeas()
   newIdeaCard(idea);
 }
 
-// function constructor -- creates a new object.
+function storeIdeas() {
+  var storedIdeas = JSON.stringify(savedIdeas);
+  localStorage.setItem('ideas', storedIdeas);
+}
+
 function Idea(title, body, quality) {
     this.title = title;
     this.body = body;
     this.id = Date.now();
-    this.quality = 'swill' || quality;;
+    this.quality = 'swill' || quality;
 }
 
-//Make new card
 function newIdeaCard(ideaObj) {
-    //since we passed in the idea object we can use the values from it
-    //using dot notation
   var newCard = `<div id="${ideaObj.id}" class="card-container">
               <h2 class="title-of-card">${ideaObj.title}</h2>
               <button class="delete-button"></button>
@@ -36,10 +32,14 @@ function newIdeaCard(ideaObj) {
               <p class="quality"> quality: <span class="qualityVariable">${ideaObj.quality}</span></p>
               <hr>
             </div>`;
-  console.log(newCard);
   var cardContainer = $('.bottom-box');
   cardContainer.prepend(newCard);
 };
+
+var localStoreCard = function() {
+    var cardString = JSON.stringify(cardObject());
+    localStorage.setItem('card' + numCards  , cardString);
+}
 
 $.each(localStorage, function(key) {
     var cardData = JSON.parse(this);
@@ -47,10 +47,7 @@ $.each(localStorage, function(key) {
     $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
 });
 
-var localStoreCard = function() {
-    var cardString = JSON.stringify(cardObject());
-    localStorage.setItem('card' + numCards  , cardString);
-}
+$('.save-btn').on('click', submitIdea);
 
 $('.save-btn').on('click', function(event) {
     event.preventDefault();
