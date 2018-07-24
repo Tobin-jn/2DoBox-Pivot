@@ -7,7 +7,7 @@ function submitIdea(event) {
   var body = $('#body-input').val(); 
   var idea = new Idea(title, body);
   savedIdeas.push(idea);
-  storeIdeas(idea)
+  storeIdeas(savedIdeas); // changed
   newIdeaCard(idea);
 }
 
@@ -59,19 +59,19 @@ function qualityCycle(event) {
     counter --;
   }
   qualityVar.text(qualityTypes[counter]);
-  console.log('quality')
 }
 
 function deleteCard(event) {
   var deleteBtn = $(event.target).parent().find('.delete-button')
-  var cardId = $(event.target).parent().attr('id')
+  var cardId = $(event.target).parent().attr('id');
+  console.log(cardId);
   if ($(event.target).hasClass('delete-button')) {
-    deleteBtn.parent().remove()
+    deleteBtn.parent().remove();
+    var newArray = savedIdeas.filter(function(idea) {  
+      return idea.id != cardId;
+    });
+    storeIdeas(newArray);
   }
-  var newArray = savedIdeas.filter(function(idea) {
-    return idea.id != cardId
-  })
-  console.log(newArray)
 }
 
 $(".bottom-box").on('click', qualityCycle);
@@ -82,13 +82,11 @@ document.addEventListener("DOMContentLoaded", persistCards);
 function persistCards() {
   var storedCards = localStorage.getItem('ideas');
   var parsedCards = JSON.parse(storedCards);
-  console.log(parsedCards)
-  parsedCards.forEach(function(i) {
-    // savedIdeas.push(i);
-    newIdeaCard(i);
+  parsedCards.forEach(function(idea) {
+    savedIdeas.push(idea);
+    newIdeaCard(idea);
   });
 }
-
 
 // $(".bottom-box").on('click', function(event){
 //     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
