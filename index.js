@@ -9,6 +9,7 @@ function submitIdea(event) {
   savedIdeas.push(idea);
   storeIdeas(savedIdeas); // changed
   newIdeaCard(idea);
+  clearInputs();
 }
 
 function storeIdeas(idea) {
@@ -36,6 +37,11 @@ function newIdeaCard(ideaObj) {
   var cardContainer = $('.bottom-box');
   cardContainer.prepend(newCard);
 };
+
+function clearInputs() {
+  $('#title-input').val('');
+  $('#body-input').val('');
+}
 
 var localStoreCard = function() {
   var cardString = JSON.stringify(cardObject());
