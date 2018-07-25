@@ -3,6 +3,11 @@ var savedIdeas = [];
 
 $(document).ready(persistCards)
 
+function clearInputs() {
+  $('#title-input').val('');
+  $('#body-input').val('');
+}
+
 function deleteCard(event) {
   var deleteBtn = $(event.target).parent().find('.delete-button')
   var cardId = $(event.target).parent().attr('id');
@@ -39,6 +44,11 @@ function newIdeaCard(ideaObj) {
   cardContainer.prepend(newCard);
 };
 
+var localStoreCard = function() {
+  var cardString = JSON.stringify(cardObject());
+  localStorage.setItem('card' + numCards  , cardString);
+}
+
 function persistCards() {
   var storedCards = localStorage.getItem('ideas');
   var parsedCards = JSON.parse(storedCards);
@@ -60,8 +70,9 @@ function submitIdea(event) {
   var body = $('#body-input').val(); 
   var idea = new Idea(title, body);
   savedIdeas.push(idea);
-  storeIdeas(savedIdeas); // changed
+  storeIdeas(savedIdeas);
   newIdeaCard(idea);
+  clearInputs();
 }
 
 function qualityCycle(event) {
