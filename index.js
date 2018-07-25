@@ -1,20 +1,16 @@
-var arrIdeas = [];
 var counter = 0;
 var savedIdeas = [];
 
-function submitIdea(event) {
-  event.preventDefault();
-  var title = $('#title-input').val();
-  var body = $('#body-input').val(); 
-  var idea = new Idea(title, body);
-  savedIdeas.push(idea);
-  storeIdeas()
-  newIdeaCard(idea);
-}
+$(document).ready(persistCards)
 
-function storeIdeas() {
-  var storedIdeas = JSON.stringify(savedIdeas);
-  localStorage.setItem('ideas', storedIdeas);
+function deleteCard(event) {
+  var deleteBtn = $(event.target).parent().find('.delete-button')
+  var cardId = $(event.target).parent().attr('id');
+  deleteBtn.parent().remove();
+  var newArray = savedIdeas.filter(function(idea) {  
+    return idea.id != cardId;
+  });
+  storeIdeas(newArray);
 }
 
 function Idea(title, body, quality) {
@@ -24,13 +20,18 @@ function Idea(title, body, quality) {
   this.quality = 'swill' || quality;
 }
 
+var localStoreCard = function() {
+  var cardString = JSON.stringify(cardObject());
+  localStorage.setItem('card' + numCards  , cardString);
+}
+
 function newIdeaCard(ideaObj) {
   var newCard = `<div id="${ideaObj.id}" class="card-container">
               <h2 class="title-of-card">${ideaObj.title}</h2>
               <button class="delete-button"></button>
               <p class="body-of-card">${ideaObj.body}</p>
-              <button class="upvote"></button>
-              <button class="downvote"></button>
+              <button class="quality-btns upvote"></button>
+              <button class="quality-btns downvote"></button>
               <p class="quality"> quality: <span class="qualityVariable">${ideaObj.quality}</span></p>
               <hr>
             </div>`;
@@ -38,18 +39,30 @@ function newIdeaCard(ideaObj) {
   cardContainer.prepend(newCard);
 };
 
-var localStoreCard = function() {
-  var cardString = JSON.stringify(cardObject());
-  localStorage.setItem('card' + numCards  , cardString);
+function persistCards() {
+  var storedCards = localStorage.getItem('ideas');
+  var parsedCards = JSON.parse(storedCards);
+  parsedCards.forEach(function(idea) {
+    savedIdeas.push(idea);
+    newIdeaCard(idea);
+  });
 }
 
-// $.each(localStorage, function(key) {
-//   var cardData = JSON.parse(this);
-//   numCards++;
-//   $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
-// });
+function storeIdeas(idea) {
+  var storedIdeas = JSON.stringify(idea);
+  localStorage.clear();
+  localStorage.setItem('ideas', storedIdeas);
+}
 
-$('.save-btn').on('click', submitIdea);
+function submitIdea(event) {
+  event.preventDefault();
+  var title = $('#title-input').val();
+  var body = $('#body-input').val(); 
+  var idea = new Idea(title, body);
+  savedIdeas.push(idea);
+  storeIdeas(savedIdeas); // changed
+  newIdeaCard(idea);
+}
 
 function qualityCycle(event) {
   var qualityTypes = ['swill', 'plausible', 'genius'];
@@ -62,18 +75,16 @@ function qualityCycle(event) {
   qualityVar.text(qualityTypes[counter]);
 }
 
-$(".bottom-box").on('click', qualityCycle);
+$(".bottom-box").on("click", function() {
+  if ($(event.target).hasClass("delete-button")) {
+    deleteCard(event);
+  }
+  if ($(event.target).hasClass("quality-btns")) {
+    qualityCycle(event);
+  }
+});
 
-document.addEventListener("DOMContentLoaded", persistCards);
-
-function persistCards() {
-  var storedCards = localStorage.getItem('ideas');
-  var parsedCards = JSON.parse(storedCards);
-  parsedCards.forEach(function(idea) {
-    newIdeaCard(idea)
-  })
-}
-
+$('.save-btn').on('click', submitIdea);
 
 // $(".bottom-box").on('click', function(event){
 //     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
