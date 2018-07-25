@@ -1,19 +1,16 @@
 var counter = 0;
 var savedIdeas = [];
 
-function submitIdea(event) {
-  event.preventDefault();
-  var title = $('#title-input').val();
-  var body = $('#body-input').val(); 
-  var idea = new Idea(title, body);
-  savedIdeas.push(idea);
-  storeIdeas(savedIdeas); // changed
-  newIdeaCard(idea);
-}
+$(document).ready(persistCards)
 
-function storeIdeas(idea) {
-  var storedIdeas = JSON.stringify(idea);
-  localStorage.setItem('ideas', storedIdeas);
+function deleteCard(event) {
+  var deleteBtn = $(event.target).parent().find('.delete-button')
+  var cardId = $(event.target).parent().attr('id');
+  deleteBtn.parent().remove();
+  var newArray = savedIdeas.filter(function(idea) {  
+    return idea.id != cardId;
+  });
+  storeIdeas(newArray); // need to fix only updating local storage once
 }
 
 function Idea(title, body, quality) {
@@ -28,8 +25,8 @@ function newIdeaCard(ideaObj) {
               <h2 class="title-of-card">${ideaObj.title}</h2>
               <button class="delete-button"></button>
               <p class="body-of-card">${ideaObj.body}</p>
-              <button class="upvote"></button>
-              <button class="downvote"></button>
+              <button class="quality-btns upvote"></button>
+              <button class="quality-btns downvote"></button>
               <p class="quality"> quality: <span class="qualityVariable">${ideaObj.quality}</span></p>
               <hr>
             </div>`;
@@ -48,7 +45,29 @@ var localStoreCard = function() {
 //   $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
 // });
 
-$('.save-btn').on('click', submitIdea);
+function persistCards() {
+  var storedCards = localStorage.getItem('ideas');
+  var parsedCards = JSON.parse(storedCards);
+  parsedCards.forEach(function(idea) {
+    savedIdeas.push(idea);
+    newIdeaCard(idea);
+  });
+}
+
+function storeIdeas(idea) {
+  var storedIdeas = JSON.stringify(idea);
+  localStorage.setItem('ideas', storedIdeas);
+}
+
+function submitIdea(event) {
+  event.preventDefault();
+  var title = $('#title-input').val();
+  var body = $('#body-input').val(); 
+  var idea = new Idea(title, body);
+  savedIdeas.push(idea);
+  storeIdeas(savedIdeas); // changed
+  newIdeaCard(idea);
+}
 
 function qualityCycle(event) {
   var qualityTypes = ['swill', 'plausible', 'genius'];
@@ -61,32 +80,17 @@ function qualityCycle(event) {
   qualityVar.text(qualityTypes[counter]);
 }
 
-function deleteCard(event) {
-  var deleteBtn = $(event.target).parent().find('.delete-button')
-  var cardId = $(event.target).parent().attr('id');
-  console.log(cardId);
-  if ($(event.target).hasClass('delete-button')) {
-    deleteBtn.parent().remove();
-    var newArray = savedIdeas.filter(function(idea) {  
-      return idea.id != cardId;
-    });
+$(".bottom-box").on("click", function() {
+  if ($(event.target).hasClass("delete-button")) {
+    console.log('del event');
+    deleteCard(event);
   }
-  storeIdeas(newArray);
-}
+  if ($(event.target).hasClass("quality-btns")) {
+    qualityCycle(event);
+  }
+});
 
-$(".bottom-box").on('click', qualityCycle);
-$(".bottom-box").on('click', deleteCard);
-
-document.addEventListener("DOMContentLoaded", persistCards);
-
-function persistCards() {
-  var storedCards = localStorage.getItem('ideas');
-  var parsedCards = JSON.parse(storedCards);
-  parsedCards.forEach(function(idea) {
-    savedIdeas.push(idea);
-    newIdeaCard(idea);
-  });
-}
+$('.save-btn').on('click', submitIdea);
 
 // $(".bottom-box").on('click', function(event){
 //     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
