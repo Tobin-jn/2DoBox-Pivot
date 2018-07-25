@@ -26,7 +26,7 @@ function Idea(title, body, quality) {
 }
 
 function newIdeaCard(ideaObj) {
-  var newCard = `<div id="${ideaObj.id}" class="card-container">
+  var newCard = `<section id="${ideaObj.id}" class="card-container">
               <h2 class="title-of-card">${ideaObj.title}</h2>
               <button class="delete-button"></button>
               <p class="body-of-card">${ideaObj.body}</p>
@@ -34,7 +34,7 @@ function newIdeaCard(ideaObj) {
               <button class="quality-btns downvote"></button>
               <p class="quality"> quality: <span class="qualityVariable">${ideaObj.quality}</span></p>
               <hr>
-            </div>`;
+            </section>`;
   var cardContainer = $('.bottom-box');
   cardContainer.prepend(newCard);
 };
@@ -90,10 +90,31 @@ $('.save-btn').on('click', submitIdea);
 $("#search-input").on('keyup', searchCards);
 
 function searchCards() {
-console.log("test")
+var cards = $('.title-of-card');
 var searchInput = $('#search-input').val();
-console.log(searchInput)
+var filter = searchInput.toUpperCase();
+var a;
+ for (var i = 0; i < cards.length; i++) {
+  a = cards[i][0];
+  if (a.innerHTML.toUpperCase().indexOf(searchInput) > -1) {
+    cards[i].style.display = '';
+  } else{
+    cards[i].style.display = 'none';
+  }
+  
+  // if (cards)
+ 
 }
+}
+// $.inArray(searchInput, cards)
+
+
+
+
+  // console.log($.inArray(searchInput, savedIdeas))
+
+
+
 
 
 // $(".bottom-box").on('click', function(event){
