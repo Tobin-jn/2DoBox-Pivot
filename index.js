@@ -70,8 +70,8 @@ function deleteCard(event) {
     var newArray = savedIdeas.filter(function(idea) {  
       return idea.id != cardId;
     });
-    storeIdeas(newArray);
   }
+  storeIdeas(newArray);
 }
 
 $(".bottom-box").on('click', qualityCycle);
