@@ -25,11 +25,6 @@ function Idea(title, body, quality) {
   this.quality = 'swill' || quality;
 }
 
-var localStoreCard = function() {
-  var cardString = JSON.stringify(cardObject());
-  localStorage.setItem('card' + numCards  , cardString);
-}
-
 function newIdeaCard(ideaObj) {
   var newCard = `<div id="${ideaObj.id}" class="card-container">
               <h2 class="title-of-card">${ideaObj.title}</h2>
@@ -43,11 +38,6 @@ function newIdeaCard(ideaObj) {
   var cardContainer = $('.bottom-box');
   cardContainer.prepend(newCard);
 };
-
-var localStoreCard = function() {
-  var cardString = JSON.stringify(cardObject());
-  localStorage.setItem('card' + numCards  , cardString);
-}
 
 function persistCards() {
   var storedCards = localStorage.getItem('ideas');
