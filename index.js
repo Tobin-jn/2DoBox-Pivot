@@ -15,6 +15,7 @@ function deleteCard(event) {
   var newArray = savedIdeas.filter(function(idea) {  
     return idea.id != cardId;
   });
+  savedIdeas = newArray;
   storeIdeas(newArray);
 }
 
@@ -69,6 +70,7 @@ function storeIdeas(idea) {
   localStorage.setItem('ideas', storedIdeas);
 }
 
+
 function submitIdea(event) {
   event.preventDefault();
   var title = $('#title-input').val();
@@ -81,14 +83,26 @@ function submitIdea(event) {
 }
 
 function qualityCycle(event) {
+  var cardId = $(event.target).parent().attr('id');
   var qualityTypes = ['swill', 'plausible', 'genius'];
   var qualityVar = $(event.target).parent().find('span');
+  var text = qualityVar;
   if (counter < 2 && $(event.target).hasClass('upvote')) {
     counter++;
+    qualityVar.text(qualityTypes[counter]);
   } else if (counter > 0 && $(event.target).hasClass('downvote')) {
     counter --;
+    qualityVar.text(qualityTypes[counter]);
   }
-  qualityVar.text(qualityTypes[counter]);
+  // qualityVar.text(qualityTypes[counter]);
+  
+  for (var i in savedIdeas) {
+    if (savedIdeas[i].id == cardId) {
+      savedIdeas[i].quality = qualityVar.text();
+      storeIdeas(savedIdeas);
+    }
+  }
+
 }
 
 $(".bottom-box").on("click", function() {
