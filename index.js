@@ -94,6 +94,15 @@ function persistCards() {
   });
 }
 
+$("#search-input").on('keyup', searchCards);
+
+function searchCards() {
+console.log("test")
+var searchInput = $('#search-input').val();
+console.log(searchInput)
+}
+
+
 // $(".bottom-box").on('click', function(event){
 //     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
 //     var qualityVariable;
