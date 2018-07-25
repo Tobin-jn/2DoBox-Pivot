@@ -1,7 +1,7 @@
 var counter = 0;
 var savedIdeas = [];
 
-$(document).ready(persistCards)
+$(document).ready(persistCards);
 
 function clearInputs() {
   $('#title-input').val('');
@@ -26,7 +26,7 @@ function Idea(title, body, quality) {
 }
 
 function newIdeaCard(ideaObj) {
-  var newCard = `<div id="${ideaObj.id}" class="card-container">
+  var newCard = `<section id="${ideaObj.id}" class="card-container">
               <h2 class="title-of-card">${ideaObj.title}</h2>
               <button class="delete-button"></button>
               <p class="body-of-card">${ideaObj.body}</p>
@@ -34,7 +34,7 @@ function newIdeaCard(ideaObj) {
               <button class="quality-btns downvote"></button>
               <p class="quality"> quality: <span class="qualityVariable">${ideaObj.quality}</span></p>
               <hr>
-            </div>`;
+            </section>`;
   var cardContainer = $('.bottom-box');
   cardContainer.prepend(newCard);
 };
@@ -46,6 +46,21 @@ function persistCards() {
     savedIdeas.push(idea);
     newIdeaCard(idea);
   });
+}
+
+function searchCards() {
+  var input = document.getElementById('search-input');
+  var inputValue = input.value.toUpperCase();
+  var section = document.querySelector('.bottom-box');
+  var cards = section.querySelectorAll('.card-container');
+  for (var i = 0; i < cards.length; i++) {
+    var title = cards[i].getElementsByTagName('h2')[0];
+    if (title.innerHTML.toUpperCase().indexOf(inputValue) > -1) {
+      cards[i].style.display = '';      
+    } else {
+        cards[i].style.display = 'none';
+      }
+    }
 }
 
 function storeIdeas(idea) {
@@ -86,6 +101,9 @@ $(".bottom-box").on("click", function() {
 });
 
 $('.save-btn').on('click', submitIdea);
+
+$("#search-input").on('keyup', searchCards);
+
 
 // $(".bottom-box").on('click', function(event){
 //     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
