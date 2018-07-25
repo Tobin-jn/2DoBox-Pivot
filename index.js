@@ -19,6 +19,19 @@ function deleteCard(event) {
   storeIdeas(newArray);
 }
 
+function editIdea(event) {
+  var cardId = $(event.target).parent().attr('id');
+  var body = $(event.target).parent().find('.body-of-card').text(); 
+  var title = $(event.target).parent().find('h2').text();
+  for (var i in savedIdeas) {
+    if (savedIdeas[i].id == cardId) {
+      savedIdeas[i].title = title;
+      savedIdeas[i].body = body;
+      storeIdeas(savedIdeas);
+    }
+  }  
+}
+
 function Idea(title, body, quality) {
   this.title = title;
   this.body = body;
@@ -28,9 +41,9 @@ function Idea(title, body, quality) {
 
 function newIdeaCard(ideaObj) {
   var newCard = `<section id="${ideaObj.id}" class="card-container">
-              <h2 class="title-of-card">${ideaObj.title}</h2>
+              <h2 contenteditable class="title-of-card">${ideaObj.title}</h2>
               <button class="delete-button"></button>
-              <p class="body-of-card">${ideaObj.body}</p>
+              <p contenteditable class="body-of-card">${ideaObj.body}</p>
               <button class="quality-btns upvote"></button>
               <button class="quality-btns downvote"></button>
               <p class="quality"> quality: <span class="qualityVariable">${ideaObj.quality}</span></p>
@@ -86,7 +99,6 @@ function qualityCycle(event) {
   var cardId = $(event.target).parent().attr('id');
   var qualityTypes = ['swill', 'plausible', 'genius'];
   var qualityVar = $(event.target).parent().find('span');
-  var text = qualityVar;
   if (counter < 2 && $(event.target).hasClass('upvote')) {
     counter++;
     qualityVar.text(qualityTypes[counter]);
@@ -94,15 +106,12 @@ function qualityCycle(event) {
     counter --;
     qualityVar.text(qualityTypes[counter]);
   }
-  // qualityVar.text(qualityTypes[counter]);
-  
   for (var i in savedIdeas) {
     if (savedIdeas[i].id == cardId) {
       savedIdeas[i].quality = qualityVar.text();
       storeIdeas(savedIdeas);
     }
   }
-
 }
 
 $(".bottom-box").on("click", function() {
@@ -111,6 +120,12 @@ $(".bottom-box").on("click", function() {
   }
   if ($(event.target).hasClass("quality-btns")) {
     qualityCycle(event);
+  }
+});
+
+$('.bottom-box').on("keyup", function(event) {
+  if (event.keyCode === 13) {
+    editIdea(event);
   }
 });
 
