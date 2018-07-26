@@ -38,20 +38,22 @@ function editIdea(event) {
   }  
 }
 
-function Idea(title, body, quality) {
+function Idea(title, body, quality, status) {
   this.title = title;
   this.body = body;
   this.id = Date.now();
   this.quality = 'swill' || quality;
+  this.status = '' || status;
 }
 
 function newIdeaCard(ideaObj) {
   var newCard = `<section id="${ideaObj.id}" class="card-container">
-              <h2 contenteditable class="title-of-card">${ideaObj.title}</h2>
+              <h2 onmouseout="editIdea(event)" contenteditable class="title-of-card ${ideaObj.status}">${ideaObj.title}</h2>
               <button class="delete-button"></button>
-              <p contenteditable class="body-of-card">${ideaObj.body}</p>
+              <p onmouseout="editIdea(event)" contenteditable class="body-of-card ${ideaObj.status}">${ideaObj.body}</p>
               <button class="quality-btns upvote"></button>
               <button class="quality-btns downvote"></button>
+              <button class="finish-btn">done</button>
               <p class="quality"> quality: <span class="qualityVariable">${ideaObj.quality}</span></p>
               <hr>
             </section>`;
@@ -99,6 +101,22 @@ function submitIdea(event) {
   clearInputs();
 }
 
+function strikeComplete(event) {
+  var cardId = $(event.target).parent().attr('id');
+  var body = $(event.target).parent().find('.body-of-card'); 
+  var title = $(event.target).parent().find('h2');
+  body.css("text-decoration", "line-through");
+  title.css("text-decoration", "line-through");
+  for (var i in savedIdeas) {
+    if (savedIdeas[i].id == cardId) {
+      savedIdeas[i].title = title.text();
+      savedIdeas[i].body = body.text();
+      savedIdeas[i].status = 'finished';
+      storeIdeas(savedIdeas);
+    }
+  }  
+}
+
 function qualityCycle(event) {
   var cardId = $(event.target).parent().attr('id');
   var qualityTypes = ['swill', 'plausible', 'genius'];
@@ -125,9 +143,13 @@ $(".bottom-box").on("click", function() {
   if ($(event.target).hasClass("quality-btns")) {
     qualityCycle(event);
   }
+  if ($(event.target).hasClass('finish-btn')) {
+    strikeComplete(event);
+  }
 });
 
 $('.bottom-box').on("keyup", function(event) {
+  console.log(event)
   if (event.keyCode === 13) {
     editIdea(event);
   }

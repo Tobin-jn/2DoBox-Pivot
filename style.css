@@ -113,6 +113,15 @@ p {
   width: 20px;
 }
 
+.finish-btn {
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 0 0 px 0;
+  position: relative;
+  top: -4px;
+  left: 10px;
+}
+
 .idea {
   color: #00a79d;
 }
@@ -151,14 +160,25 @@ p {
   background-image: url(./images/delete-hover.svg);
   background-size: cover;
   height: 20px;
+  transition-duration: 2s;
   width: 20px;
+}
+
+.finished {
+  text-decoration: line-through;
 }
 
 .downvote:hover {
   background-image: url(./images/downvote-hover.svg);
   background-size: cover;
   height: 20px;
+  transition-duration: 2s;
   width: 20px;
+}
+
+.finish-btn:hover {
+  background: lightcoral;
+  transition-duration: 2s;
 }
 
 input::placeholder {
@@ -167,6 +187,7 @@ input::placeholder {
 
 .save-btn:hover {
   background-color: #045e55;
+  transition-duration: 2s;
 }
 
 .upvote:hover {
@@ -174,6 +195,7 @@ input::placeholder {
   background-image: url(./images/upvote-hover.svg);
   background-size: cover;
   height: 20px;
+  transition-duration: 2s;
   width: 20px;
 }
 
