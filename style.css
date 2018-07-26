@@ -3,15 +3,13 @@
     display: flex;
     flex-direction: column;
     font-family: 'Roboto Slab', serif;
-    /* font-family: 'Roboto Slab', serif;
-    font-family: 'Open Sans', sans-serif; */
 }
 
 body {
   box-sizing: border-box;
-  margin: 0;
-  font-family: 'Roboto Slab', serif;
   color: #6d6e71; 
+  font-family: 'Roboto Slab', serif;
+  margin: 0;
 }
 
 button {
@@ -116,10 +114,10 @@ p {
 .finish-btn {
   border: 1px solid grey;
   border-radius: 10px;
+  left: 10px;
   padding: 0 0 px 0;
   position: relative;
   top: -4px;
-  left: 10px;
 }
 
 .idea {
@@ -202,7 +200,6 @@ input::placeholder {
 /*============Theme===========*/
 
 @media(max-width: 640px){
-
   input {
     width: 85%;
     height: 35px;

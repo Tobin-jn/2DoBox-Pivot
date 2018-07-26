@@ -152,7 +152,6 @@ $(".bottom-box").on("click", function() {
 });
 
 $('.bottom-box').on("keyup", function(event) {
-  console.log(event)
   if (event.keyCode === 13) {
     editIdea(event);
   }
