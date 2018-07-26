@@ -27,12 +27,15 @@ function deleteCard(event) {
 
 function editIdea(event) {
   var cardId = $(event.target).parent().attr('id');
-  var body = $(event.target).parent().find('.body-of-card').text(); 
-  var title = $(event.target).parent().find('h2').text();
+  var body = $(event.target).parent().find('.body-of-card'); 
+  var title = $(event.target).parent().find('h2');
+  body.css("text-decoration", "none");
+  title.css("text-decoration", "none");
   for (var i in savedIdeas) {
     if (savedIdeas[i].id == cardId) {
-      savedIdeas[i].title = title;
-      savedIdeas[i].body = body;
+      savedIdeas[i].title = title.text();
+      savedIdeas[i].body = body.text();
+      savedIdeas[i].status = '';
       storeIdeas(savedIdeas);
     }
   }  
