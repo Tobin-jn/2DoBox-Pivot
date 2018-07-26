@@ -1,7 +1,13 @@
 var counter = 0;
 var savedIdeas = [];
 
-$(document).ready(persistCards);
+$(document).ready(function() { 
+  if (localStorage === null) {
+    return false;
+  } else {
+    persistCards();
+  }
+});
 
 function clearInputs() {
   $('#title-input').val('');
@@ -68,13 +74,12 @@ function searchCards() {
   var section = document.querySelector('.bottom-box');
   var cards = section.querySelectorAll('.card-container');
   for (var i = 0; i < cards.length; i++) {
-    var title = cards[i].getElementsByTagName('h2')[0];
-    if (title.innerHTML.toUpperCase().indexOf(inputValue) > -1) {
+    if (cards[i].innerHTML.toUpperCase().indexOf(inputValue) > -1) {
       cards[i].style.display = '';      
     } else {
-        cards[i].style.display = 'none';
-      }
+      cards[i].style.display = 'none';
     }
+  }
 }
 
 function storeIdeas(idea) {
@@ -82,7 +87,6 @@ function storeIdeas(idea) {
   localStorage.clear();
   localStorage.setItem('ideas', storedIdeas);
 }
-
 
 function submitIdea(event) {
   event.preventDefault();
